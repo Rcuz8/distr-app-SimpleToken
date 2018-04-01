@@ -1,0 +1,53 @@
+<!doctype html>
+        <html>
+<head>
+    <title>Simple Token</title>
+    <script src="web3.js/dist/web3.min.js"></script>
+    <script type="text/javascript">
+        
+         var contract_address = "0x29a9c0904f2e41ac87a0cc651df0efd4303051bc";
+        var contract_abi = [ { "constant": false, "inputs": [ { "name": "to", "type": "address" }, { "name": "amount", "type": "uint256" } ], "name": "sendTokens", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "_address", "type": "address" } ], "name": "checkBalance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getCentralBankBalance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "amount", "type": "uint256" } ], "name": "requestFromMint", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "name": "circulatingSupply", "type": "uint256" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ];
+        
+        var contract_instance = web3.eth.contract(contract_abi).at(contract_address);
+   
+        
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+            web3.eth.defaultAccount = web3.eth.accounts[0];
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            web3.eth.defaultAccount = web3.eth.accounts[0];
+            console.log(web3.eth.accounts[0]);
+        }
+
+        // Syntax -> 
+        //    set: contract_instance.function( [PARAM?], function(err, res) { [DO STUFF] });
+        //    web3.eth.getBalance(web3.eth.defaultAccount, function(err, result) { [DO STUFF]});
+        //    contract_instance.function( [PARAM?], function(err, res) { [DO STUFF] });
+        
+        function getMyBalance() {
+            let element-balance = document.getElementById("id-getBalance-textarea").innerHTML
+            contract_instance.checkBalance(element-balance, function(err, result) {
+                
+                document.getElementById("id-getBalance-result").innerHTML = result.toNumber();
+            });
+        }
+        
+        
+        
+        
+    </script>
+</head>
+<body>
+<h1>This is my balance</h1>
+<button onclick="getBalance()">Update my balance</button>
+<span id="myBalance"></span> in Ether
+    
+<h2> Active Number: </h2><br>
+<h2 id="activeNumber"> No Results! </h2>
+<button onclick="getActiveNumber()" >Update Active Number!</button>
+    <button onclick="setActiveNumber()" >set Number!</button>
+    
+</body>
+</html>
